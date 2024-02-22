@@ -1,0 +1,43 @@
+.bg-image {
+    background-image: url('https://images.hdqwalls.com/download/after-sunset-minimal-4k-zm-1366x768.jpg');
+    background-size: cover;
+    background-position: fixed;
+  }
+
+  .navbar {
+    background-color: transparent !important; /* Set the background color to transparent */
+  }
+
+  .bigContainer {
+    background-color: rgba(4, 62, 100, 0.624) !important;
+  }
+
+  @keyframes floatY {
+    0% { transform: translateX(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateX(0); }
+  }
+
+  .floatOnY {
+      animation: floatY 2s infinite;
+  }
+
+  @keyframes appearfromRight {
+    0% { opacity: 0; transform: translateX(1000px); }
+    50% { opacity: 1; transform: translateX(0); }
+    100% { opacity: 1; transform: translateX(0); }
+  }
+
+  .appearfromRight {
+      animation: appearfromRight 2s;
+  }
+
+  @keyframes appearfromTop {
+    0% { opacity: 0; transform: translateY(-1000px); }
+    50% { opacity: 1; transform: translateX(0); }
+    100% { opacity: 1; transform: translateX(0); }
+  }
+
+  .appearfromTop {
+      animation: appearfromTop 2s;
+  }
