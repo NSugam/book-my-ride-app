@@ -14,7 +14,7 @@ export default function Navbar(props) {
 
   return (
     <>
-      <nav className="navbar bigContainer navbar-expand-lg navbar-dark d-flex justify-content-between">
+      <nav className="navbar bigContainer navbar-expand-lg navbar-dark ">
         <div className="container-fluid">
           <Link className="navbar-brand link-danger" to="/">BookMyRide</Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,6 +40,7 @@ export default function Navbar(props) {
               </li>
 
             </ul>
+            
             {localStorage.getItem("jwtToken")?<button className="btn btn-outline-danger" onClick={handlelogout}>Signout</button>:
             <Link className="btn btn-outline-danger" to="/login">Login/Signup</Link>
             }

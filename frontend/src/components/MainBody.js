@@ -5,11 +5,15 @@ import { Context } from '../context/SharedState';
 
 export default function MainBody(props) {
 
-  sessionStorage.clear();
 
+  //  Here I am using some values from STATES and some from SESSION-STORAGE just to know how both of these things work in realworld.
   const states = useContext(Context);
   const city = states.city
   const vtype = states.vtype
+  const startDate = sessionStorage.getItem('startDate')
+  const startTime = sessionStorage.getItem('startTime')
+  const endDate = sessionStorage.getItem('endDate')
+  const endTime = sessionStorage.getItem('endTime')
 
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, "0");
@@ -19,7 +23,8 @@ export default function MainBody(props) {
 
   const navigate = useNavigate();
 
-  function checkDate(dateInput, timeInput) {
+  function checkStartDateTime(dateInput, timeInput) {
+    console.log(dateInput, timeInput)
     const [year, month, day] = dateInput.split("-");
     const [hours, minutes] = timeInput.split(":");
     
@@ -32,8 +37,8 @@ export default function MainBody(props) {
   const handleSubmit = async e => {
     e.preventDefault();
 
-    if (checkDate(states.dateString, states.timeString)) {
-      axios.post(states.hostname+"/api/search/", { city, vtype })
+    if (checkStartDateTime(sessionStorage.getItem('startDate'), sessionStorage.getItem('startTime'))) {
+      axios.post(states.hostname+"/api/search/", { city, vtype, startDate, startTime })
       .then(res => {
         if(res.data==="Empty"){
           props.showAlert("Sorry! Vehicle(s) are not available", "danger")
@@ -41,8 +46,6 @@ export default function MainBody(props) {
         }
         sessionStorage.setItem('city', states.city)
         sessionStorage.setItem('vtype', states.vtype)
-        sessionStorage.setItem('dateString', states.dateString)
-        sessionStorage.setItem('timeString', states.timeString)
         navigate('/search')
       })
       .catch(err=> {
@@ -91,20 +94,20 @@ export default function MainBody(props) {
 
               <div className="col-md-6">
                 <label className="form-label">Pickup Date</label>
-                <input type="date" className="form-control" min={currentDate} onChange={e => { states.setDate(e.target.value); }} required/>
+                <input type="date" className="form-control" min={currentDate} onChange={e => { states.setStartDate(e.target.value); sessionStorage.setItem('startDate', e.target.value); }} required/>
               </div>
               <div className="col-md-6">
                 <label className="form-label">Pickup Time</label>
-                <input type="time" id="time" name="time" className="form-control" onChange={e => { states.setTime(e.target.value); }} required/>
+                <input type="time" id="time" name="time" className="form-control" onChange={e => { sessionStorage.setItem('startTime', e.target.value); }} required/>
               </div>
 
               <div className="col-md-6">
-                <label className="form-label"> Drop Date</label>
-                <input type="date" className="form-control" />
+                <label className="form-label" > Drop Date</label>
+                <input type="date" className="form-control" min={sessionStorage.getItem('startDate')} onChange={e => { sessionStorage.setItem('endDate', e.target.value); }} required/>
               </div>
               <div className="col-md-6">
                 <label className="form-label"> Drop Time</label>
-                <input type="time" className="form-control" />
+                <input type="time" className="form-control" onChange={e => { sessionStorage.setItem('endTime', e.target.value); }} required/>
               </div>
               <hr />
               <div className="col-12">

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Context } from '../context/SharedState';
 import axios from 'axios';
@@ -6,13 +6,18 @@ import axios from 'axios';
 export default function Booking(props) {
     const states = useContext(Context);
     const navigate = useNavigate()
-    const { bikeId } = useParams();
-    // const bikeId = sessionStorage.getItem('bikeId')
-    
+    const { bikeId } = useParams()
+    const taxRate = 0.13;
+    const totalHours = sessionStorage.getItem('totalHours')
+
+    const [user, setUser] = useState({ data: {} });
+
     const handleBooking = async () => {
-        axios.put(states.hostname+"/api/handlebooking/?bikeId="+bikeId). then ( res=> {
-            const result = res.data
-            states.setBooking({ data: result })
+        axios.put(states.hostname + "/api/handlebooking/?bikeId=" + bikeId).then(res => {
+            const vehicle = res.data.details
+            const user = res.data.user
+            setUser({ data: user })
+            states.setBooking({ data: vehicle })
         }).catch(err => {
             props.showAlert("Data not found! Don't interfere with the URL pattern", "danger")
             navigate("/search")
@@ -23,46 +28,81 @@ export default function Booking(props) {
         handleBooking();
     }, []);
 
-    if (!states.booking.data.map) {
-        return <p className='text-light'>Waiting for server...</p>;
+    if (!states.booking.data.map || !user.data.map) {
+        return (<>
+            <p className='text-light'>Waiting for server...</p>
+
+        </>
+        );
     }
 
     return (
         <>
-            <div className="container">
+
+            <div className="container m-auto p-2 bigContainer text-start rounded">
+                <marquee className='fw-bold text-danger mx-2'>
+                    Crossing speed limit is strictly prohibited. Rs.1000/- will be fined each time the speed limit is crossed.
+                    Every vehicles are attached with a realtime-GPS system for your safety! </marquee>
+            </div>
+
+            <div className="container mt-4">
                 <div className="row">
+
+                    {user.data.map(user => (
+                        <div className="col-sm-8 mt-2 text-start appearfromTop" key={user._id}>
+                            <div class="card bigContainer text-light">
+                                <h5 class="card-header">Booking Information: {user.username}</h5>
+                                <div class="card-body">
+                                    <p>Once the payment is done, confirmation mail will be sent on: {user.email}</p>
+                                    <p class="card-text">If you want to change your user information. Go to profile settings</p>
+                                    <div>
+                                        <strong>Following documents need to be submitted before you rent the bike:</strong><br />
+                                        (1) Driving License will be verified in original.<br />
+                                        (2) Original ID proof (Passport, Voter ID, Driving License) needs to be deposited.<br />
+                                        (3) Passport needs to be deposited for bikes above 500cc (Mandatory).<br /><br />
+                                        <strong>For International Visitors:</strong><br />
+                                        (1) Valid Driving License from their home country with international riding permit, and a valid Visa. (Original to be brought).<br />
+                                        (2) Passport need to be deposited (Mandatory)<br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+
                     {states.booking.data.map(data => (
-                        <div className="col-sm-4 mt-2" key={data._id}>
+                        <div className="col-sm-4 mt-2 mb-4 appearfromRight" key={data._id}>
                             <div className="card h-100 bigContainer text-light">
                                 <a className="link-hover hover-zoom" href="#"><img src={data.img} className="card-img-top" alt="Loading..." height={230} /></a>
                                 <div className="card-body">
                                     <h5 className="card-title">{data.bikeName} {data.modelName}</h5>
-                                    <div className="card-text text-start table-responsive-xl">
+                                    <div className="card-text text-end table-responsive-xl">
                                         <div className='table-responsive'>
                                             <table className="bigContainer bg-dark table  text-center table-hover table-responsive">
                                                 <thead >
                                                     <tr>
                                                         <th scope="col" className='bigContainer text-light'>Rate</th>
                                                         <th scope="col" className='bigContainer text-light'>Speed Limit</th>
+                                                        <th scope="col" className='bigContainer text-light'>Engine</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td className='bigContainer text-light'>Rs. {data.rate}/per hr<br />Rs. {data.rate * 24}/per day</td>
+                                                        <td className='bigContainer text-light'>Rs. {data.rate} /per hr</td>
                                                         <td className='bigContainer text-light'>{data.limit}</td>
+                                                        <td className='bigContainer text-light'>{data.cc} cc</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
-                                        Pickup Location: <strong> {data.city}</strong>
+                                        Tax (13%):  Rs. {Math.round((data.rate * totalHours) * taxRate)}<br />
+                                        Total amount: <strong> Rs. {Math.round((data.rate * totalHours) * (1 + taxRate))}</strong>
                                     </div>
                                 </div>
                                 <div className=" d-flex card-footer justify-content-between">
-                                    <small className="text-light text-start"><strong>
-                                        {data.vType === "M300" ? "High CC Motorcycle" : "Lower CC Motorcycle"} </strong></small>
-                                    <Link to="/booking" className='link-danger link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-50-hover'>
-                                        <strong>Book Now</strong>
-                                    </Link>
+                                    <small className="text-light text-start">Pickup: <strong> {data.city}</strong></small>
+                                    <a onClick={() => window.alert("Payment Gateway...")} className='btn btn-sm btn-outline-danger link-underline-opacity-50-hover'>
+                                        <strong>Pay Now Rs. {Math.round((data.rate * totalHours) * (1 + taxRate))}</strong>
+                                    </a>
                                 </div>
                             </div>
                         </div>

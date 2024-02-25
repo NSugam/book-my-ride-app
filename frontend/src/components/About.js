@@ -14,13 +14,13 @@ export default function About() {
                     </h2>
                     <div id="panelsStayOpen-collapseZero" className="accordion-collapse collapse">
                         <div className="accordion-body">
-                        <strong>Following documents need to be submitted before you rent the bike:</strong><br/>
-                        (1) Driving License will be verified in original.<br/>
-                        (2) Original ID proof (Passport, Voter ID, Driving License) needs to be deposited.<br/>
-                        (3) Passport needs to be deposited for bikes above 500cc (Mandatory).<br/><br/>
-                        <strong>For International Visitors:</strong><br/>
-                        (1) Valid Driving License from their home country with international riding permit, and a valid Visa. (Original to be brought).<br/>
-                        (2) Passport need to be deposited (Mandatory)<br/>
+                            <strong>Following documents need to be submitted before you rent the bike:</strong><br />
+                            (1) Driving License will be verified in original.<br />
+                            (2) Original ID proof (Passport, Voter ID, Driving License) needs to be deposited.<br />
+                            (3) Passport needs to be deposited for bikes above 500cc (Mandatory).<br /><br />
+                            <strong>For International Visitors:</strong><br />
+                            (1) Valid Driving License from their home country with international riding permit, and a valid Visa. (Original to be brought).<br />
+                            (2) Passport need to be deposited (Mandatory)<br />
                         </div>
                     </div>
                 </div>
@@ -33,10 +33,10 @@ export default function About() {
                     </h2>
                     <div id="panelsStayOpen-collapseOne" className="accordion-collapse collapse">
                         <div className="accordion-body">
-                            Notify us at least 24 hours before your scheduled rental start time to receive a full refund.<br/><br/>
-                            For cancellations made less than 24 hours in advance, a 50% refund will be issued.<br/>
-                            No refunds will be provided for cancellations made after the scheduled rental start time or for no-shows.<br/><br/>
-                            Refunds will be processed using the original payment method.<br/>
+                            Notify us at least 24 hours before your scheduled rental start time to receive a full refund.<br /><br />
+                            For cancellations made less than 24 hours in advance, a 50% refund will be issued.<br />
+                            No refunds will be provided for cancellations made after the scheduled rental start time or for no-shows.<br /><br />
+                            Refunds will be processed using the original payment method.<br />
                             Please allow up to 7 business days for the refund to appear in your account.
                         </div>
                     </div>
@@ -93,10 +93,10 @@ export default function About() {
                     </h2>
                     <div id="panelsStayOpen-collapseFive" className="accordion-collapse collapse">
                         <div className="accordion-body">
-                        <strong>Yes. BookMyRide provides one helmet with each booking. </strong>
-                        Second helmet will be provided at Rs.100/day, if needed. Both Helmets are subject to the availability. Rs. 1000 deposit needs to be paid for each helmet.<br/>
-                        If the helmet is damaged or lost, a minimum charge of Rs. 1000 will be levied.<br/><br/>
-                        Note: Deposits paid through UPI shall be returned in a maximum of 24 hours. Deposits paid through cash shall be returned immediately during bike return.
+                            <strong>Yes. BookMyRide provides one helmet with each booking. </strong>
+                            Second helmet will be provided at Rs.100/day, if needed. Both Helmets are subject to the availability. Rs. 1000 deposit needs to be paid for each helmet.<br />
+                            If the helmet is damaged or lost, a minimum charge of Rs. 1000 will be levied.<br /><br />
+                            Note: Deposits paid through UPI shall be returned in a maximum of 24 hours. Deposits paid through cash shall be returned immediately during bike return.
                         </div>
                     </div>
                 </div>

@@ -9,9 +9,8 @@ const SharedState = (props) => {
 
     const [city, setCity] = useState();
     const [vtype, setVtype] = useState();
-    const [dateString, setDate] = useState();
-    const [timeString, setTime] = useState();
-    const [bikeId, setBikeId] = useState();
+    const [startDate, setStartDate] = useState();
+    const [startTime, setStartTime] = useState();
 
     const [result, setResults] = useState({data: {}});
     const [booking, setBooking] = useState({data: {}});
@@ -24,9 +23,8 @@ const SharedState = (props) => {
             result, setResults, 
             city, setCity, 
             vtype, setVtype, 
-            dateString, setDate, 
-            timeString, setTime,
-            bikeId, setBikeId
+            startDate, setStartDate, 
+            startTime, setStartTime,
         }}>
 
             {props.children}

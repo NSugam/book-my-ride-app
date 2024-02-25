@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { Context } from '../context/SharedState';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import moment from 'moment';
 
 export default function VehicleCards(props) {
     const navigate = useNavigate();
@@ -10,18 +11,29 @@ export default function VehicleCards(props) {
     sessionStorage.removeItem("bikeId");
     const city = sessionStorage.getItem('city')
     const vtype = sessionStorage.getItem('vtype')
-    const dateString = sessionStorage.getItem('dateString')
-    const timeString = sessionStorage.getItem('timeString')
+    const startDate = sessionStorage.getItem('startDate')
+    const startTime = sessionStorage.getItem('startTime')
+    const endDate = sessionStorage.getItem('endDate')
+    const endTime = sessionStorage.getItem('endTime')
+
+    const startDateTime = moment(`${startDate}T${startTime}`);
+    const endDateTime = moment(`${endDate}T${endTime}`);
+
+    const totalDays = endDateTime.diff(startDateTime, 'days');
+    const Hours = endDateTime.diff(startDateTime, 'hours') % 24
+    const totalHours = endDateTime.diff(startDateTime, 'hours')
+    sessionStorage.setItem("totalHours", totalHours)
 
     const handleSubmit = async (e) => {
 
         if (e) {
             e.preventDefault();
         }
-        axios.post(states.hostname+"/api/search/", { city, vtype })
+        axios.post(states.hostname + "/api/search/", { city, vtype })
             .then(async res => {
                 const result = res.data
                 if (res.data === "Empty") {
+                    sessionStorage.clear()
                     navigate('/')
                     props.showAlert("Sorry! Vehicle(s) are not available", "danger")
                 } else {
@@ -36,10 +48,10 @@ export default function VehicleCards(props) {
 
     useEffect(() => {
         handleSubmit();
-    }, [city, vtype, dateString, timeString]);
+    }, [city, vtype, startDate, startTime]);
 
     const handleBooking = async (bikeId) => {
-        navigate("/booking/"+bikeId);
+        navigate("/booking/" + bikeId);
     }
 
     if (!states.result.data.map) {
@@ -48,18 +60,17 @@ export default function VehicleCards(props) {
 
     return (
         <>
-            <div className="container m-auto p-2 bigContainer text-start rounded" role="alert">
+            <div className="container m-auto p-2 bigContainer text-start rounded d-flex justify-content-between">
                 <button type="button" className="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#ModifyDataModal">
                     Modify Details
                 </button>
-                <strong className='text-light mx-2'>Crossing speed limit is strictly prohibited</strong>
+                <strong className='text-light mx-2'>Time Period: {totalDays} days {Hours} hours (Total: {totalHours} hrs) </strong>
 
                 <div className="modal fade" id="ModifyDataModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-hidden="true"  >
                     <div className="modal-dialog modal-dialog-centered">
                         <div className="modal-content text-light" style={{ backgroundColor: "rgba(0, 60, 100, 0.8)" }}>
                             <div className="modal-header">
                                 <h1 className="modal-title fs-5">Modify Search</h1>
-                                {/* <button type="button" className="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button> */}
                             </div>
                             <div className="modal-body">
                                 <form className="row g-3" onSubmit={handleSubmit}>
@@ -84,23 +95,23 @@ export default function VehicleCards(props) {
 
                                     <div className="col-md-6">
                                         <label className="form-label">Pickup Date</label>
-                                        <input type="date" className="form-control" defaultValue={dateString} onChange={e => { sessionStorage.setItem('dateString', e.target.value) }} />
+                                        <input type="date" className="form-control" defaultValue={startDate} onChange={e => { sessionStorage.setItem('startDate', e.target.value) }} />
                                     </div>
                                     <div className="col-md-6">
                                         <label className="form-label">Pickup Time</label>
-                                        <input type="time" id="time" name="time" className="form-control" defaultValue={timeString} onChange={e => { sessionStorage.setItem('timeString', e.target.value) }} />
+                                        <input type="time" id="time" name="time" className="form-control" defaultValue={startTime} onChange={e => { sessionStorage.setItem('startTime', e.target.value) }} />
                                     </div>
 
                                     <div className="col-md-6">
                                         <label className="form-label"> Drop Date</label>
-                                        <input type="date" className="form-control" />
+                                        <input type="date" className="form-control" defaultValue={endDate} onChange={e => { sessionStorage.setItem('endDate', e.target.value) }} />
                                     </div>
                                     <div className="col-md-6">
                                         <label className="form-label"> Drop Time</label>
-                                        <input type="time" className="form-control" />
+                                        <input type="time" className="form-control" defaultValue={endTime} onChange={e => { sessionStorage.setItem('endTime', e.target.value) }} />
                                     </div>
                                     <div className='text-end'>
-                                    <button type="submit" className="btn btn-outline-danger mt-2" onSubmit={handleSubmit} data-bs-dismiss="modal" aria-label="Close">Save Changes</button>
+                                        <button type="submit" className="btn btn-outline-danger mt-2" onSubmit={handleSubmit} data-bs-dismiss="modal" aria-label="Close">Save Changes</button>
                                     </div>
                                 </form>
                             </div>
@@ -113,12 +124,12 @@ export default function VehicleCards(props) {
             <div className="container">
                 <div className="row appearfromTop">
                     {states.result.data.map(data => (
-                        <div className="col-sm-4 mt-2" key={data._id}>
+                        <div className="col-sm-4 mt-3 mb-3" key={data._id}>
                             <div className="card h-100 bigContainer text-light">
                                 <a className="link-hover hover-zoom" href="#"><img src={data.img} className="card-img-top" alt="Loading..." height={230} /></a>
                                 <div className="card-body">
                                     <h5 className="card-title">{data.bikeName} {data.modelName}</h5>
-                                    <div className="card-text text-start table-responsive-xl">
+                                    <div className="card-text text-end table-responsive-xl">
                                         <div className='table-responsive'>
                                             <table className="bigContainer bg-dark table  text-center table-hover table-responsive">
                                                 <thead >
@@ -130,19 +141,19 @@ export default function VehicleCards(props) {
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td className='bigContainer text-light'>Rs. {data.rate}/per hr<br />Rs. {data.rate * 24}/per day</td>
+                                                        <td className='bigContainer text-light'>Rs. {data.rate} /per hr</td>
                                                         <td className='bigContainer text-light'>{data.limit}</td>
                                                         <td className='bigContainer text-light'>{data.cc} cc</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
-                                        Pickup Location: <strong> {data.city}</strong>
+                                        Available: <strong>2</strong><br />
+                                        Price: <strong> Rs. {data.rate * totalHours}/-</strong>
                                     </div>
                                 </div>
                                 <div className=" d-flex card-footer justify-content-between">
-                                    <small className="text-light text-start"><strong>
-                                        {data.vType === "M300" ? "High CC Motorcycle" : "Lower CC Motorcycle"} </strong></small>
+                                    <small className="text-light text-start">Pickup: <strong> {data.city}</strong></small>
                                     <a onClick={() => handleBooking(data._id)} className='btn btn-sm btn-outline-danger link-underline-opacity-50-hover'>
                                         <strong>Book Now</strong>
                                     </a>

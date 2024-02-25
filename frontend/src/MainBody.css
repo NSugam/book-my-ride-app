@@ -41,3 +41,25 @@
   .appearfromTop {
       animation: appearfromTop 2s;
   }
+
+
+  /* Scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(4, 62, 100, 0.624);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: skyblue;
+}
+
