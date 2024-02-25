@@ -50,7 +50,7 @@ function App() {
               <Route exact path="/login" element={<Login showAlert={showAlert} />} />
               <Route exact path="/signup" element={<Signup showAlert={showAlert} />} />
               <Route exact path="/search" element={<VehicleCards showAlert={showAlert} />} />
-              <Route exact path="/booking" element={<Booking showAlert={showAlert} />} />
+              <Route exact path="/booking/:bikeId" element={<Booking showAlert={showAlert} />} />
               <Route exact path="/registration" element={<Registration showAlert={showAlert} />} />
             </Routes>
           </div>

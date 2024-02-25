@@ -7,6 +7,7 @@ export default function VehicleCards(props) {
     const navigate = useNavigate();
     const states = useContext(Context);
 
+    sessionStorage.removeItem("bikeId");
     const city = sessionStorage.getItem('city')
     const vtype = sessionStorage.getItem('vtype')
     const dateString = sessionStorage.getItem('dateString')
@@ -17,18 +18,14 @@ export default function VehicleCards(props) {
         if (e) {
             e.preventDefault();
         }
-        axios.post("http://localhost:9090/api/search/", { city, vtype })
-            .then(res => {
+        axios.post(states.hostname+"/api/search/", { city, vtype })
+            .then(async res => {
                 const result = res.data
                 if (res.data === "Empty") {
-                    props.showAlert("Sorry! Vehicle(s) are not available", "danger")
                     navigate('/')
-
+                    props.showAlert("Sorry! Vehicle(s) are not available", "danger")
                 } else {
-                    if (e) {
-                        window.location.reload(false)
-                    }
-                    states.setResults({ data: result })
+                    await states.setResults({ data: result })
                 }
             })
             .catch(err => {
@@ -39,18 +36,10 @@ export default function VehicleCards(props) {
 
     useEffect(() => {
         handleSubmit();
-    }, []);
+    }, [city, vtype, dateString, timeString]);
 
     const handleBooking = async (bikeId) => {
-        sessionStorage.setItem('bikeId', bikeId)
-        const bikeId2 = sessionStorage.getItem('bikeId')
-        console.log(bikeId)
-        const res = await axios.put("http://localhost:9090/api/handlebooking", { bikeId })
-        const vehicledata = await res.data.Vehicle
-        console.log("From server res", vehicledata)
-        await states.setBooking({ data: vehicledata })
-        console.log(states.booking)
-        // navigate('/booking')
+        navigate("/booking/"+bikeId);
     }
 
     if (!states.result.data.map) {
@@ -60,17 +49,17 @@ export default function VehicleCards(props) {
     return (
         <>
             <div className="container m-auto p-2 bigContainer text-start rounded" role="alert">
-                <button type="button" className="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" className="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#ModifyDataModal">
                     Modify Details
                 </button>
                 <strong className='text-light mx-2'>Crossing speed limit is strictly prohibited</strong>
 
-                <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal fade" id="ModifyDataModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-hidden="true"  >
                     <div className="modal-dialog modal-dialog-centered">
                         <div className="modal-content text-light" style={{ backgroundColor: "rgba(0, 60, 100, 0.8)" }}>
                             <div className="modal-header">
-                                <h1 className="modal-title fs-5" id="exampleModalLabel">Modify Search</h1>
-                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <h1 className="modal-title fs-5">Modify Search</h1>
+                                {/* <button type="button" className="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button> */}
                             </div>
                             <div className="modal-body">
                                 <form className="row g-3" onSubmit={handleSubmit}>
@@ -111,7 +100,7 @@ export default function VehicleCards(props) {
                                         <input type="time" className="form-control" />
                                     </div>
                                     <div className='text-end'>
-                                        <button className="btn btn-outline-danger">Save changes</button>
+                                    <button type="submit" className="btn btn-outline-danger mt-2" onSubmit={handleSubmit} data-bs-dismiss="modal" aria-label="Close">Save Changes</button>
                                     </div>
                                 </form>
                             </div>

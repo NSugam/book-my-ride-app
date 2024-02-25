@@ -14,7 +14,6 @@ export default function LoginSignup(props) {
         .then (res=> {
                 const token = res.data.authtoken
                 props.showAlert("Welcome! "+res.data.username+" you are logged in", "danger")
-                console.log(token)
                 localStorage.setItem("jwtToken", token)
                 setAuthToken(token)
                 navigate('/')

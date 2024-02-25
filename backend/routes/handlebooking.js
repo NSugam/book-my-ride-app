@@ -5,10 +5,14 @@ const router = express.Router()
 const userDataModel = require('../Modals/Userdata')
 const vehicleDetailsModel = require("../Modals/Vehicledata")
 
-router.post('/',  fetchUser, async (req,res)=> {
-    const Vehicle = await vehicleDetailsModel.findById(req.body.bikeId)
-    const user = await userDataModel.findById(req.user.id).select("-password")
-    res.send({Vehicle, user})
+router.put('/',  fetchUser, async (req,res)=> {
+    try{
+        const details = await vehicleDetailsModel.find({_id: req.query.bikeId})
+        const user = await userDataModel.findById(req.user.id).select("-password")
+        res.json(details)
+    } catch {
+        res.status(404).send("Data not found")
+    }
 
 })
 

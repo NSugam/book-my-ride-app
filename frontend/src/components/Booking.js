@@ -1,18 +1,22 @@
 import React, { useContext, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Context } from '../context/SharedState';
 import axios from 'axios';
 
-export default function Booking() {
+export default function Booking(props) {
     const states = useContext(Context);
+    const navigate = useNavigate()
+    const { bikeId } = useParams();
+    // const bikeId = sessionStorage.getItem('bikeId')
     
     const handleBooking = async () => {
-        const bikeId = sessionStorage.getItem('bikeId')
-        const res = await axios.post("http://localhost:9090/api/handlebooking", { bikeId })
-        const vehicledata = await res.data.Vehicle
-        const save = await states.setBooking({data: vehicledata})
-        console.log(states.booking)
-        sessionStorage.setItem('bikeId', bikeId)
+        axios.put(states.hostname+"/api/handlebooking/?bikeId="+bikeId). then ( res=> {
+            const result = res.data
+            states.setBooking({ data: result })
+        }).catch(err => {
+            props.showAlert("Data not found! Don't interfere with the URL pattern", "danger")
+            navigate("/search")
+        })
     }
 
     useEffect(() => {
@@ -20,7 +24,7 @@ export default function Booking() {
     }, []);
 
     if (!states.booking.data.map) {
-        return <p className='text-light'>Loading Data...</p>;
+        return <p className='text-light'>Waiting for server...</p>;
     }
 
     return (

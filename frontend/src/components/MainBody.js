@@ -5,10 +5,11 @@ import { Context } from '../context/SharedState';
 
 export default function MainBody(props) {
 
+  sessionStorage.clear();
+
   const states = useContext(Context);
   const city = states.city
   const vtype = states.vtype
-
 
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, "0");
@@ -32,15 +33,12 @@ export default function MainBody(props) {
     e.preventDefault();
 
     if (checkDate(states.dateString, states.timeString)) {
-      axios.post("http://localhost:9090/api/search/", { city, vtype })
+      axios.post(states.hostname+"/api/search/", { city, vtype })
       .then(res => {
-        const result = res.data
-        console.log("Server bata responce aayo: " + res.data)
         if(res.data==="Empty"){
           props.showAlert("Sorry! Vehicle(s) are not available", "danger")
           return
         }
-        states.setResults({data: result})
         sessionStorage.setItem('city', states.city)
         sessionStorage.setItem('vtype', states.vtype)
         sessionStorage.setItem('dateString', states.dateString)
