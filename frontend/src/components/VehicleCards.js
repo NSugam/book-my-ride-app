@@ -154,7 +154,7 @@ export default function VehicleCards(props) {
                                 </div>
                                 <div className=" d-flex card-footer justify-content-between">
                                     <small className="text-light text-start">Pickup: <strong> {data.city}</strong></small>
-                                    <a onClick={() => handleBooking(data._id)} className='btn btn-sm btn-outline-danger link-underline-opacity-50-hover'>
+                                    <a onClick={() => handleBooking(data._id)} className='btn btn-sm btn-outline-danger'>
                                         <strong>Book Now</strong>
                                     </a>
                                 </div>

@@ -12,7 +12,7 @@ export default function Booking(props) {
 
     const [user, setUser] = useState({ data: {} });
 
-    const handleBooking = async () => {
+    const getBookingData = async () => {
         axios.put(states.hostname + "/api/handlebooking/?bikeId=" + bikeId).then(res => {
             const vehicle = res.data.details
             const user = res.data.user
@@ -23,15 +23,26 @@ export default function Booking(props) {
             navigate("/search")
         })
     }
-
     useEffect(() => {
-        handleBooking();
+        getBookingData();
     }, []);
 
-    if (!states.booking.data.map || !user.data.map) {
-        return (<>
-            <p className='text-light'>Waiting for server...</p>
+    const submitBooking = async () => {
+        axios.put(states.hostname + "/api/handlebooking/checkout/?bikeId=" + bikeId).then(res => {
+            navigate('/')
+            props.showAlert(res.data, "success")
 
+        }).catch(err => {
+            props.showAlert("Data not found! Don't interfere with the URL pattern", "danger")
+            navigate("/search")
+        })
+    }
+
+
+    if (!states.booking.data.map || !user.data.map) {
+        return (
+        <>
+            <p className='text-light'>Waiting for server...</p>
         </>
         );
     }
@@ -50,11 +61,11 @@ export default function Booking(props) {
 
                     {user.data.map(user => (
                         <div className="col-sm-8 mt-2 text-start appearfromTop" key={user._id}>
-                            <div class="card bigContainer text-light">
-                                <h5 class="card-header">Booking Information: {user.username}</h5>
-                                <div class="card-body">
+                            <div className="card bigContainer text-light">
+                                <h5 className="card-header">Booking Information: {user.username}</h5>
+                                <div className="card-body">
                                     <p>Once the payment is done, confirmation mail will be sent on: {user.email}</p>
-                                    <p class="card-text">If you want to change your user information. Go to profile settings</p>
+                                    <p className="card-text">If you want to change your user information. Go to profile settings</p>
                                     <div>
                                         <strong>Following documents need to be submitted before you rent the bike:</strong><br />
                                         (1) Driving License will be verified in original.<br />
@@ -100,7 +111,7 @@ export default function Booking(props) {
                                 </div>
                                 <div className=" d-flex card-footer justify-content-between">
                                     <small className="text-light text-start">Pickup: <strong> {data.city}</strong></small>
-                                    <a onClick={() => window.alert("Payment Gateway...")} className='btn btn-sm btn-outline-danger link-underline-opacity-50-hover'>
+                                    <a onClick={ () => submitBooking(data._id) } className='btn btn-sm btn-outline-danger'>
                                         <strong>Pay Now Rs. {Math.round((data.rate * totalHours) * (1 + taxRate))}</strong>
                                     </a>
                                 </div>
