@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 const fs = require("fs")
 
 const RentalDetailsSchema = new mongoose.Schema({
-    UserId: String,
+    userId: String,
     bikeId: String,
     pickupDate: String,
     pickupTime: String

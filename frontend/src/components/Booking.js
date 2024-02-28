@@ -30,11 +30,18 @@ export default function Booking(props) {
     const submitBooking = async () => {
         axios.put(states.hostname + "/api/handlebooking/checkout/?bikeId=" + bikeId).then(res => {
             navigate('/')
-            props.showAlert(res.data, "success")
+            props.showAlert("Booking Confirmed!", "success")
 
         }).catch(err => {
-            props.showAlert("Data not found! Don't interfere with the URL pattern", "danger")
-            navigate("/search")
+            if (err.response.status == '409') {
+                props.showAlert("You cannot book the same vehicle twice", "danger")
+                sessionStorage.clear()
+                navigate("/")
+            }
+            if (err.response.status == '404') {
+                props.showAlert("Data not found! Don't interfere with URL pattern", "danger")
+                navigate("/search")
+            }
         })
     }
 

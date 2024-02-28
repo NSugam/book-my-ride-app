@@ -52,6 +52,7 @@ function App() {
               <Route exact path="/search" element={<VehicleCards showAlert={showAlert} />} />
               <Route exact path="/booking/:bikeId" element={<Booking showAlert={showAlert} />} />
               <Route exact path="/registration" element={<Registration showAlert={showAlert} />} />
+              <Route exact path="/mybooking" element={<Registration showAlert={showAlert} />} />
             </Routes>
           </div>
         </Router>

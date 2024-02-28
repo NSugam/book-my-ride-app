@@ -18,22 +18,18 @@ router.put('/',  fetchUser, async (req,res)=> {
 })
 
 router.put('/checkout',  fetchUser, async (req,res)=> {
-    try{
-        const Vehicledetails = await vehicleDetailsModel.find({bikeId: req.query.bikeId},{UserId: req.user.id})
-        const userdetails = await userDataModel.find({_id: req.user.id}).select("-password")
+    try{  
+        const Vehicledetails = await RentalDetailsModel.find({ $and: [{ userId: req.user.id }, { bikeId: req.query.bikeId }] })
 
-        console.log("Vehicledetails: ", Vehicledetails)
-
-        if (Vehicledetails == "") {
-            RentalDetailsModel.create( {
-                bikeId: req.query.bikeId,
-                UserId: req.user.id
-            })
-            res.send("Booking Confirmed!")
-        } else {
-            res.send("Data already xa")
+        if (Vehicledetails != "") {
+            res.status(409).send("You cannot book the same vehicle twice")
+            return
         }
-
+        RentalDetailsModel.create( {
+            bikeId: req.query.bikeId,
+            userId: req.user.id
+        })
+        res.send("Booking Confirmed!")
 
     } catch {
         res.status(404).send("Data not found")

@@ -5,11 +5,12 @@ import setAuthToken from './setAuthToken'
 export default function Navbar(props) {
   const location = useLocation()
 
-  const handlelogout = ()=> {
+  const handlelogout = () => {
+    props.showAlert("Signing out...", "danger")
     localStorage.clear()
+    sessionStorage.clear()
     setAuthToken(false)
     window.location.reload(false)
-    props.showAlert("Signing out...", "danger")
   }
 
   return (
@@ -28,23 +29,26 @@ export default function Navbar(props) {
               <li className="nav-item">
                 <Link className={`nav-link ${location.pathname === '/about' ? "active" : ""}`} to="/about">About</Link>
               </li>
-
-              <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admin Control</a>
-                <ul className="dropdown-menu">
-                  <li><Link className="dropdown-item" to="/registration">Register new vehicle</Link></li>
-                  <li><a className="dropdown-item" href="#">Site Settings</a></li>
-                  <li><hr className="dropdown-divider" /></li>
-                  <li><a className="dropdown-item" href="#">Main Dashboard</a></li>
-                </ul>
+              <li className="nav-item">
+                <Link className={`nav-link ${location.pathname === '/about' ? "active" : ""}`} to="/about">Contact us</Link>
               </li>
-
             </ul>
-            
-            {localStorage.getItem("jwtToken")?<button className="btn btn-outline-danger" onClick={handlelogout}>Signout</button>:
-            <Link className="btn btn-outline-danger" to="/login">Login/Signup</Link>
-            }
 
+            {localStorage.getItem("jwtToken") ?
+              <div class="btn-group">
+                <button type="button" class="btn btn-outline-danger dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                  My Profile
+                </button>
+                <ul class="dropdown-menu dropdown-menu-lg-end dropdown-menu-dark">
+                  <li><Link className="dropdown-item" to="/registration">Register new vehicle</Link></li>
+                  <li><Link className="dropdown-item" to="/mybooking">My Bookings</Link></li>
+                  <li><a className="dropdown-item" href="#">Profile Settings</a></li>
+                  <li><hr className="dropdown-divider" /></li>
+                  <li><Link className="dropdown-item text-danger fw-bold" onClick={handlelogout}>Logout</Link></li>
+                </ul>
+              </div> :
+              <Link className="btn btn-outline-danger" to="/login">Login/Signup</Link>
+            }
           </div>
         </div>
       </nav>
