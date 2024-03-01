@@ -28,7 +28,14 @@ export default function Booking(props) {
     }, []);
 
     const submitBooking = async () => {
-        axios.put(states.hostname + "/api/handlebooking/checkout/?bikeId=" + bikeId).then(res => {
+        const data = {
+            bikeId: bikeId,
+            startDate: sessionStorage.getItem('startDate'),
+            startTime: sessionStorage.getItem('startTime'),
+            endDate: sessionStorage.getItem('endDate'),
+            endTime: sessionStorage.getItem('endTime')
+        };
+        axios.put(states.hostname + "/api/handlebooking/checkout", data).then(res => {
             navigate('/')
             props.showAlert("Booking Confirmed!", "success")
 
@@ -45,12 +52,16 @@ export default function Booking(props) {
         })
     }
 
+    const handleCoupon = () => {
+        props.showAlert("Invalid Coupon Code", "danger")
+    }
+
 
     if (!states.booking.data.map || !user.data.map) {
         return (
-        <>
-            <p className='text-light'>Waiting for server...</p>
-        </>
+            <>
+                <p className='text-light'>Waiting for server...</p>
+            </>
         );
     }
 
@@ -95,7 +106,7 @@ export default function Booking(props) {
                                     <h5 className="card-title">{data.bikeName} {data.modelName}</h5>
                                     <div className="card-text text-end table-responsive-xl">
                                         <div className='table-responsive'>
-                                            <table className="bigContainer bg-dark table  text-center table-hover table-responsive">
+                                            <table className="bigContainer bg-dark table text-center table-hover table-responsive">
                                                 <thead >
                                                     <tr>
                                                         <th scope="col" className='bigContainer text-light'>Rate</th>
@@ -112,13 +123,18 @@ export default function Booking(props) {
                                                 </tbody>
                                             </table>
                                         </div>
+                                        <div className="input-group mb-3">
+                                            <input type="text" className="form-control" placeholder="Coupon Code" aria-label="Recipient's username" aria-describedby="button-addon2" />
+                                            <button className="btn btn-primary" onClick={handleCoupon}>Apply</button>
+                                        </div>
+
                                         Tax (13%):  Rs. {Math.round((data.rate * totalHours) * taxRate)}<br />
                                         Total amount: <strong> Rs. {Math.round((data.rate * totalHours) * (1 + taxRate))}</strong>
                                     </div>
                                 </div>
                                 <div className=" d-flex card-footer justify-content-between">
                                     <small className="text-light text-start">Pickup: <strong> {data.city}</strong></small>
-                                    <a onClick={ () => submitBooking(data._id) } className='btn btn-sm btn-outline-danger'>
+                                    <a onClick={() => submitBooking(data._id)} className='btn btn-sm btn-outline-danger'>
                                         <strong>Pay Now Rs. {Math.round((data.rate * totalHours) * (1 + taxRate))}</strong>
                                     </a>
                                 </div>

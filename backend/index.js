@@ -25,3 +25,6 @@ app.use('/api/handlebooking', require('./routes/handlebooking'))
 
 // for registering new vehicle
 app.use('/api/register', require('./routes/register'))
+
+// for handling user data
+app.use('/api/getRentalDetails', require('./routes/getRentalDetails'))

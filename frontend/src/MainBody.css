@@ -28,14 +28,24 @@
     100% { opacity: 1; transform: translateX(0); }
   }
 
-  .appearfromRight {
-      animation: appearfromRight 2s;
+  @keyframes appearfromLeft {
+    0% { opacity: 0; transform: translateX(-1000px); }
+    50% { opacity: 1; transform: translateX(0); }
+    100% { opacity: 1; transform: translateX(0); }
   }
 
   @keyframes appearfromTop {
     0% { opacity: 0; transform: translateY(-1000px); }
     50% { opacity: 1; transform: translateX(0); }
     100% { opacity: 1; transform: translateX(0); }
+  }
+
+  .appearfromRight {
+      animation: appearfromRight 2s;
+  }
+
+  .appearfromLeft {
+      animation: appearfromLeft 2s;
   }
 
   .appearfromTop {

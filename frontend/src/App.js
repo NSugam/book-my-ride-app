@@ -13,6 +13,9 @@ import { useState } from 'react';
 import "./MainBody.css";
 import './App.css';
 import Booking from './components/Booking';
+import UserBookings from './components/UserBookings';
+import Page404 from './components/Page404';
+import Contactus from './components/Contactus';
 
 
 function App() {
@@ -47,12 +50,14 @@ function App() {
             <Routes>
               <Route exact path="/" element={<MainBody showAlert={showAlert} />} />
               <Route exact path="/about" element={<About showAlert={showAlert} />} />
+              <Route exact path="/contact" element={<Contactus showAlert={showAlert} />} />
               <Route exact path="/login" element={<Login showAlert={showAlert} />} />
               <Route exact path="/signup" element={<Signup showAlert={showAlert} />} />
               <Route exact path="/search" element={<VehicleCards showAlert={showAlert} />} />
               <Route exact path="/booking/:bikeId" element={<Booking showAlert={showAlert} />} />
               <Route exact path="/registration" element={<Registration showAlert={showAlert} />} />
-              <Route exact path="/mybooking" element={<Registration showAlert={showAlert} />} />
+              <Route exact path="/mybooking" element={<UserBookings showAlert={showAlert} />} />
+              <Route path="*" element={<Page404 />} />
             </Routes>
           </div>
         </Router>
