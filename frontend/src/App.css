@@ -8,4 +8,9 @@
   'wght' 400,
   'GRAD' 0,
   'opsz' 24
+
+}
+.material-symbols-outlined:hover {
+  color: red !important; /* Change the color to whatever you prefer */
+  cursor: pointer; /* Change the cursor to a pointer on hover */
 }
