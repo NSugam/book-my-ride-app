@@ -5,7 +5,7 @@ const Context = createContext();
 
 const SharedState = (props) => {
 
-    const hostname = "http://localhost:9090"
+    const hostname = process.env.REACT_APP_LOCALHOST
 
     const [city, setCity] = useState();
     const [vtype, setVtype] = useState();

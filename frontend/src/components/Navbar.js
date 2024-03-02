@@ -36,7 +36,7 @@ export default function Navbar(props) {
 
             {localStorage.getItem("jwtToken") ?
               <div className="btn-group">
-                <span class="material-symbols-outlined dropdown-toggle text-light fs-2" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                <span className="material-symbols-outlined dropdown-toggle text-light fs-2" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
                   settings_account_box
                 </span>
 

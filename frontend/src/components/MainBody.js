@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { Context } from '../context/SharedState';
 export default function MainBody(props) {
 
-
   //  Here I am using some values from STATES and some from SESSION-STORAGE just to know how both of these things work in realworld.
   const states = useContext(Context);
   const city = states.city
@@ -172,7 +171,7 @@ export default function MainBody(props) {
                   <div className="card">
                     <div className="card-body">
                       <h5 className="card-title">
-                        <span class="material-symbols-outlined me-2">
+                        <span className="material-symbols-outlined me-2">
                           record_voice_over
                         </span>
                         Sugam Neupane</h5>
@@ -189,7 +188,7 @@ export default function MainBody(props) {
                   <div className="card">
                     <div className="card-body">
                       <h5 className="card-title">
-                        <span class="material-symbols-outlined me-2">
+                        <span className="material-symbols-outlined me-2">
                           record_voice_over
                         </span>
                         Ram Bahadur</h5>
@@ -206,7 +205,7 @@ export default function MainBody(props) {
                   <div className="card">
                     <div className="card-body">
                       <h5 className="card-title">
-                        <span class="material-symbols-outlined me-2">
+                        <span className="material-symbols-outlined me-2">
                           record_voice_over
                         </span>
                         Barun Shrestha</h5>
@@ -223,7 +222,7 @@ export default function MainBody(props) {
                   <div className="card">
                     <div className="card-body">
                       <h5 className="card-title">
-                      <span class="material-symbols-outlined me-2">
+                      <span className="material-symbols-outlined me-2">
                           record_voice_over
                         </span>
                         Rahul Moktan</h5>
@@ -263,8 +262,8 @@ export default function MainBody(props) {
         </div>
       </div>
 
-      <footer class="footer mt-auto py-3 bigContainer text-light text-end">
-        <div class="container text-center">
+      <footer className="footer mt-auto py-3 bigContainer text-light text-end">
+        <div className="container text-center">
           <span>© 2024 www.bookmyride.com || Sugam Neupane</span>
         </div>
       </footer>

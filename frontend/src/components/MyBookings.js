@@ -42,7 +42,7 @@ export default function UserBookings(props) {
             <div className="container">
                 <h3 className='text-light text-start'>All booking details</h3>
                 <p className='text-light text-start'>All your completed and on-going bookings will be displayed here. You cannot delete or update any booking details here.</p>
-                <hr/>
+                <hr />
                 <div className="row appearfromTop">
                     {states.result.data.map(data => (
                         <div className="col-sm-4 mt-3 mb-3" key={data._id}>
