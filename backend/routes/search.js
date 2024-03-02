@@ -4,11 +4,14 @@ const router = express.Router()
 
 const vehicleDetailsModel = require("../Modals/Vehicledata")
 
-router.post('/',fetchUser, async (req, res)=> {
-    const {city, vtype} = req.body
+router.post('/', fetchUser, async (req, res) => {
+    const { city, vtype, sortBy } = req.body
 
-    if (req.body.vtype === "Any" ) {
-        const allVehicle = await vehicleDetailsModel.find({city:city}).sort({ cc: 1 })
+    let sortObj = {};
+    sortObj[sortBy] = 1;
+
+    if (req.body.vtype === "Any") {
+        const allVehicle = await vehicleDetailsModel.find({ city: city }).sort(sortObj)
         if (allVehicle == "") {
             res.json("Empty")
             return
@@ -16,15 +19,15 @@ router.post('/',fetchUser, async (req, res)=> {
         res.json(allVehicle)
         return
     }
-    else {   
-        const details = await vehicleDetailsModel.find({city:city, vType:vtype})
+    else {
+        const details = await vehicleDetailsModel.find({ city: city, vType: vtype }).sort(sortObj)
         if (details == "") {
             res.json("Empty")
             return
-        } 
+        }
         res.json(details)
     }
-    
+
 })
 
 module.exports = router

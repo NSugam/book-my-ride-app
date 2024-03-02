@@ -15,6 +15,7 @@ export default function VehicleCards(props) {
     const startTime = sessionStorage.getItem('startTime')
     const endDate = sessionStorage.getItem('endDate')
     const endTime = sessionStorage.getItem('endTime')
+    const sortBy = sessionStorage.getItem('sortBy')
 
     const startDateTime = moment(`${startDate}T${startTime}`);
     const endDateTime = moment(`${endDate}T${endTime}`);
@@ -29,7 +30,7 @@ export default function VehicleCards(props) {
         if (e) {
             e.preventDefault();
         }
-        axios.post(states.hostname + "/api/search/", { city, vtype })
+        axios.post(states.hostname + "/api/search/", { city, vtype, sortBy })
             .then(async res => {
                 const result = res.data
                 if (res.data === "Empty") {
@@ -48,7 +49,7 @@ export default function VehicleCards(props) {
 
     useEffect(() => {
         handleSubmit();
-    }, [city, vtype, startDate, startTime]);
+    }, [sortBy, city, vtype, startDate, startTime]);
 
     const handleBooking = async (bikeId) => {
         navigate("/booking/" + bikeId);
@@ -67,10 +68,10 @@ export default function VehicleCards(props) {
 
                 <strong className='text-light mx-2'>Time Period: {totalDays} days {Hours} hours (Total: {totalHours} hrs) </strong>
 
-                <select className="rounded p-2" defaultValue={"cc"}>
-                    <option value="cc" disabled>Sort by: bike cc</option>
-                    <option value="vtype">Vehicle type</option>
+                <select className="rounded p-2" value="" onChange={e => { sessionStorage.setItem('sortBy', e.target.value); handleSubmit(); }}>
+                    <option value="" disabled>Sort by:</option>
                     <option value="rate">Price Rate</option>
+                    <option value="cc">Lower cc</option>
                 </select>
 
                 <div className="modal fade" id="ModifyDataModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-hidden="true"  >
@@ -132,7 +133,7 @@ export default function VehicleCards(props) {
                     {states.result.data.map(data => (
                         <div className="col-sm-4 mt-3 mb-3" key={data._id}>
                             <div className="card h-100 bigContainer text-light">
-                                <a className="link-hover hover-zoom" href="#"><img src={data.img} className="card-img-top" alt="Loading..." height={230} /></a>
+                                <a><img src={data.img} className="card-img-top" alt="Loading..." height={230} /></a>
                                 <div className="card-body">
                                     <h5 className="card-title">{data.bikeName} {data.modelName}</h5>
                                     <div className="card-text text-end table-responsive-xl">

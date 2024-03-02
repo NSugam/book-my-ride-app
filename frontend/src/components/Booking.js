@@ -42,11 +42,11 @@ export default function Booking(props) {
 
             }).catch(err => {
                 if (err.response.status == '409') {
-                    props.showAlert("You cannot book the same vehicle twice", "danger")
+                    props.showAlert("Booking already done for this vehicle", "danger")
                     sessionStorage.clear()
                     navigate("/")
                 }
-                if (err.response.status == '404') {
+                if (err.response.status == '500') {
                     props.showAlert("Data not found! Don't interfere with URL pattern", "danger")
                     navigate("/search")
                 }

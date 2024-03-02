@@ -2,13 +2,11 @@ import React, { useContext, useEffect } from 'react';
 import { Context } from '../context/SharedState';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import moment from 'moment';
 
 export default function UserBookings(props) {
 
     const navigate = useNavigate();
     const states = useContext(Context);
-
 
     const getRentalDetails = async () => {
 

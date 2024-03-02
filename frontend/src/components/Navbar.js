@@ -36,9 +36,10 @@ export default function Navbar(props) {
 
             {localStorage.getItem("jwtToken") ?
               <div className="btn-group">
-                <button type="button" className="btn btn-outline-danger dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-                  My Profile
-                </button>
+                <span class="material-symbols-outlined dropdown-toggle text-light fs-2" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                  settings_account_box
+                </span>
+
                 <ul className="dropdown-menu dropdown-menu-lg-end dropdown-menu-dark">
                   <li><Link className="dropdown-item" to="/registration">Register new vehicle</Link></li>
                   <li><Link className="dropdown-item" to="/mybooking">My Bookings</Link></li>
@@ -47,7 +48,7 @@ export default function Navbar(props) {
                   <li><Link className="dropdown-item text-danger fw-bold" onClick={handlelogout}>Logout</Link></li>
                 </ul>
               </div> :
-              <Link className="btn btn-outline-danger" to="/login">Login/Signup</Link>
+              <Link className="btn btn-outline-light" to="/login">Login/Signup</Link>
             }
           </div>
         </div>

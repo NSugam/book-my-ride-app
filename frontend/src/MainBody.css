@@ -73,3 +73,14 @@
   background: skyblue;
 }
 
+/* Remove the right-side arrow from the dropdown toggle */
+.dropdown-toggle::after {
+  display: none;
+}
+/* Change cursor to pointer on hover */
+.dropdown-toggle:hover {
+  cursor: pointer;
+}
+
+
+

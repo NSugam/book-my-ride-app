@@ -171,7 +171,11 @@ export default function MainBody(props) {
                 <div className="carousel-item active">
                   <div className="card">
                     <div className="card-body">
-                      <h5 className="card-title">Sugam Neupane</h5>
+                      <h5 className="card-title">
+                        <span class="material-symbols-outlined me-2">
+                          record_voice_over
+                        </span>
+                        Sugam Neupane</h5>
                       <h6 className="card-subtitle mb-2 text-body-secondary">Ninja ZX10R</h6>
                       <p className="card-text pe-5">
                         "The Kawasaki ZX-10R is a thrilling and powerful sportbike that offers exceptional performance and handling on the track."
@@ -184,7 +188,11 @@ export default function MainBody(props) {
                 <div className="carousel-item">
                   <div className="card">
                     <div className="card-body">
-                      <h5 className="card-title">Ram Bahadur</h5>
+                      <h5 className="card-title">
+                        <span class="material-symbols-outlined me-2">
+                          record_voice_over
+                        </span>
+                        Ram Bahadur</h5>
                       <h6 className="card-subtitle mb-2 text-body-secondary">Honda Activa</h6>
                       <p className="card-text pe-5">
                         "The Honda Activa is a practical choice, offering smooth performance and great fuel efficiency for daily commutes."
@@ -197,7 +205,11 @@ export default function MainBody(props) {
                 <div className="carousel-item">
                   <div className="card">
                     <div className="card-body">
-                      <h5 className="card-title">Barun Shrestha</h5>
+                      <h5 className="card-title">
+                        <span class="material-symbols-outlined me-2">
+                          record_voice_over
+                        </span>
+                        Barun Shrestha</h5>
                       <h6 className="card-subtitle mb-2 text-body-secondary">Pulsar NS200</h6>
                       <p className="card-text pe-5">
                         "The Pulsar NS 200 is a powerful and stylish bike, ideal for those looking for a thrilling ride with great performance and handling."
@@ -210,7 +222,11 @@ export default function MainBody(props) {
                 <div className="carousel-item">
                   <div className="card">
                     <div className="card-body">
-                      <h5 className="card-title">Rahul Moktan</h5>
+                      <h5 className="card-title">
+                      <span class="material-symbols-outlined me-2">
+                          record_voice_over
+                        </span>
+                        Rahul Moktan</h5>
                       <h6 className="card-subtitle mb-2 text-body-secondary">Royal Enfield Classic 350</h6>
                       <p className="card-text pe-5">
                         "The Royal Enfield Classic 350 is a timeless beauty, perfect for those who crave a blend of style and power."
@@ -241,17 +257,17 @@ export default function MainBody(props) {
             Whether you're a local looking for a reliable ride or a traveler exploring new destinations,
             choose us for a superior bike rental experience.<br />
             <a className="btn btn-outline-success mt-3" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}> Book a ride now </a>
-            <Link className="btn btn-success mt-3 ms-3" to='/contact'>Contact us</Link>
+            <Link className="btn btn-warning mt-3 ms-3" to='/contact'>Contact us</Link>
 
           </div>
         </div>
       </div>
 
       <footer class="footer mt-auto py-3 bigContainer text-light text-end">
-                <div class="container text-center">
-                    <span>© 2024 www.bookmyride.com || Sugam Neupane</span>
-                </div>
-            </footer>
+        <div class="container text-center">
+          <span>© 2024 www.bookmyride.com || Sugam Neupane</span>
+        </div>
+      </footer>
 
     </>
   );

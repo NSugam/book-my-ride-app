@@ -13,7 +13,7 @@ import { useState } from 'react';
 import "./MainBody.css";
 import './App.css';
 import Booking from './components/Booking';
-import UserBookings from './components/UserBookings';
+import UserBookings from './components/MyBookings';
 import Page404 from './components/Page404';
 import Contactus from './components/Contactus';
 

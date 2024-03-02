@@ -1,4 +1,5 @@
 const express = require("express")
+const mongoose = require("mongoose")
 var fetchUser = require("../middleware/fetchUser")
 const router = express.Router()
 const bodyParser = require('body-parser');
@@ -39,8 +40,8 @@ router.put('/checkout', bodyParser.json(), fetchUser, async (req,res)=> {
         })
         res.send("Booking Confirmed!")
 
-    } catch {
-        res.status(404).send("Data not found")
+    } catch (error){
+        res.status(500).send("Server Problem")
     }
 
 })
