@@ -27,4 +27,4 @@ app.use('/api/handlebooking', require('./routes/handlebooking'))
 app.use('/api/register', require('./routes/register'))
 
 // for handling user data
-app.use('/api/getRentalDetails', require('./routes/getRentalDetails'))
+app.use('/api/getRentalDetails', require('./routes/getRentalData'))

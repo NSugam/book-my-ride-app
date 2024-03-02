@@ -26,7 +26,7 @@ export default function UserBookings(props) {
                 props.showAlert(err.response.data, "danger")
             })
     };
-    
+
 
     useEffect(() => {
         getRentalDetails();
@@ -40,11 +40,19 @@ export default function UserBookings(props) {
     return (
         <>
             <div className="container">
+                <h3 className='text-light text-start'>All booking details</h3>
+                <p className='text-light text-start'>All you completed and on-going bookings will be displayed here. You cannot delete or update any booking details here.</p>
+                <hr/>
                 <div className="row appearfromTop">
                     {states.result.data.map(data => (
                         <div className="col-sm-4 mt-3 mb-3" key={data._id}>
                             <div className="card h-100 bigContainer text-light">
-                                <a className="link-hover hover-zoom" href="#"><img src={data.img} className="card-img-top" alt="Loading..." height={230} /></a>
+                                <div style={{ position: "relative" }}>
+                                    <span style={{ position: "absolute", top: 0, right: 0, background: "rgba(0, 0, 0, 0.5)", color: "white", padding: "5px 10px" }}>
+                                        On Going
+                                    </span>
+                                    <img src={data.img} className="card-img-top" alt="Loading..." height={230} />
+                                </div>
                                 <div className="card-body">
                                     <h5 className="card-title">{data.bikeName} {data.modelName}</h5>
                                     <div className="card-text text-end table-responsive-xl">
@@ -82,6 +90,20 @@ export default function UserBookings(props) {
                                                 </tbody>
                                             </table>
                                         </div>
+
+                                        <div className="text-start">
+                                            Booked on: {new Date(data.date).toLocaleDateString('en-US', {
+                                                year: 'numeric',
+                                                month: 'short',
+                                                day: 'numeric',
+                                                hour: 'numeric',
+                                                minute: 'numeric'
+                                            })}
+                                        </div>
+                                        <div className="text-start">
+                                            Paid amount: Rs. {data.payment}
+                                        </div>
+
                                     </div>
                                 </div>
                                 <div className=" d-flex card-footer justify-content-between">

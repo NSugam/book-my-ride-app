@@ -7,8 +7,11 @@ export default function Booking(props) {
     const states = useContext(Context);
     const navigate = useNavigate()
     const { bikeId } = useParams()
-    const taxRate = 0.13;
+    
     const totalHours = sessionStorage.getItem('totalHours')
+    const rate = sessionStorage.getItem("rate")
+    const taxRate = 0.13;
+    const payment = Math.round((rate * totalHours) * (1 + taxRate))
 
     const [user, setUser] = useState({ data: {} });
 
@@ -28,12 +31,17 @@ export default function Booking(props) {
     }, []);
 
     const submitBooking = async () => {
+
+        console.log("Amount",rate)
+        console.log("Payment",payment)
+
         const data = {
             bikeId: bikeId,
             startDate: sessionStorage.getItem('startDate'),
             startTime: sessionStorage.getItem('startTime'),
             endDate: sessionStorage.getItem('endDate'),
-            endTime: sessionStorage.getItem('endTime')
+            endTime: sessionStorage.getItem('endTime'),
+            payment: payment
         };
         axios.put(states.hostname + "/api/handlebooking/checkout", data)
             .then(res => {
@@ -130,14 +138,15 @@ export default function Booking(props) {
                                             <button className="btn btn-primary" onClick={handleCoupon}>Apply</button>
                                         </div>
 
+                                        Amount:  Rs. {data.rate * totalHours}<br />
                                         Tax (13%):  Rs. {Math.round((data.rate * totalHours) * taxRate)}<br />
-                                        Total amount: <strong> Rs. {Math.round((data.rate * totalHours) * (1 + taxRate))}</strong>
+                                        Total to be paid: <strong> Rs. {Math.round((data.rate * totalHours) * (1 + taxRate))}</strong>
                                     </div>
                                 </div>
                                 <div className=" d-flex card-footer justify-content-between">
                                     <small className="text-light text-start">Pickup: <strong> {data.city}</strong></small>
                                     <a onClick={() => submitBooking(data._id)} className='btn btn-sm btn-outline-danger'>
-                                        <strong>Pay Now Rs. {Math.round((data.rate * totalHours) * (1 + taxRate))}</strong>
+                                        <strong>Pay Now Rs. { payment }</strong>
                                     </a>
                                 </div>
                             </div>

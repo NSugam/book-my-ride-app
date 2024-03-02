@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 
 const userDataModel = require('../Modals/Userdata')
 const vehicleDetailsModel = require("../Modals/Vehicledata")
-const RentalDetailsModel = require("../Modals/Rentaldata")
+const RentalDataModel = require("../Modals/Rentaldata")
 
 router.put('/',  fetchUser, async (req,res)=> {
     try{
@@ -21,21 +21,22 @@ router.put('/',  fetchUser, async (req,res)=> {
 
 router.put('/checkout', bodyParser.json(), fetchUser, async (req,res)=> {
     try{  
-        const { bikeId, startDate, startTime, endDate, endTime } = req.body;
+        const { bikeId, startDate, startTime, endDate, endTime, payment } = req.body;
 
-        const Vehicledetails = await RentalDetailsModel.find({ $and: [{ userId: req.user.id }, { bikeId: bikeId }] })
+        const Vehicledetails = await RentalDataModel.find({ $and: [{ userId: req.user.id }, { bikeId: bikeId }] })
 
         if (Vehicledetails != "") {
             res.status(409).send("You cannot book the same vehicle twice")
             return
         }
-        RentalDetailsModel.create( {
+        RentalDataModel.create( {
             bikeId: bikeId,
             userId: req.user.id,
             startDate: startDate,
             startTime: startTime,
             endDate: endDate,
             endTime: endTime,
+            payment: payment
 
         })
         res.send("Booking Confirmed!")

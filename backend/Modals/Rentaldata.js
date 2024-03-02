@@ -8,8 +8,10 @@ const RentalDetailsSchema = new mongoose.Schema({
     startTime: String,
     endDate: String,
     endTime: String,
+    payment: String,
+    date: { type: Date, default: Date.now }
 
 })
-const RentalDetailsModel = mongoose.model("rental-details", RentalDetailsSchema)
+const RentalDataModel = mongoose.model("rental-details", RentalDetailsSchema)
 
-module.exports=RentalDetailsModel
+module.exports=RentalDataModel
