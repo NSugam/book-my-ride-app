@@ -7,7 +7,8 @@ export default function Booking(props) {
     const states = useContext(Context);
     const navigate = useNavigate()
     const { bikeId } = useParams()
-    
+
+    //calculating total amount to be payed and to store in db
     const totalHours = sessionStorage.getItem('totalHours')
     const rate = sessionStorage.getItem("rate")
     const taxRate = 0.13;
