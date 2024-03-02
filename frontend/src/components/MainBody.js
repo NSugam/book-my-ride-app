@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from '../context/SharedState';
-
 export default function MainBody(props) {
 
 
@@ -60,8 +59,8 @@ export default function MainBody(props) {
 
   return (
     <>
-      <div className="row m-auto" id="home">
-        <div className="container col-sm-8">
+      <div className="row m-auto">
+        <div className="container col-sm-7">
           <img
             src="images/car.png" alt="Loading..." width="105%" height="100%" className="floatOnY" />
         </div>
@@ -75,16 +74,15 @@ export default function MainBody(props) {
             <form className="row g-3" onSubmit={handleSubmit}>
               <div className="col-md-6">
                 <select id="inputState" className="form-select" defaultValue="" onChange={e => { states.setCity(e.target.value); }} required>
-                  <option value="" disabled>Choose your City...</option>
+                  <option value="" disabled>Your City...</option>
                   <option value="Bangalore">Bangalore</option>
-                  <option value="Hydrabad">Hydrabad</option>
                   <option value="Delhi">Delhi</option>
-                  <option value="Chennai">Chennai</option>
+                  <option value="Hydrabad">Hydrabad</option>
                 </select>
               </div>
               <div className="col-md-6">
                 <select id="inputState" className="form-select" defaultValue="" onChange={e => { states.setVtype(e.target.value); }} required>
-                  <option value="" disabled> Choose Vehicle Type... </option>
+                  <option value="" disabled>Vehicle Type... </option>
                   <option value="Scooter">Scooters (within city limit)</option>
                   <option value="L300">Less than 300cc Motorcycle</option>
                   <option value="M300">More than 300cc Motorcycle</option>
@@ -117,7 +115,9 @@ export default function MainBody(props) {
           </div>
         </div>
       </div>
-      <div className="container-fluid bg-light mt-5" style={{ height: "auto" }}>
+
+      {/* Below Main Page */}
+      <div className="container-fluid bg-light" style={{ height: "auto" }}>
         <div className="row">
 
           <div className="container col-sm-7 " >
@@ -241,17 +241,17 @@ export default function MainBody(props) {
             Whether you're a local looking for a reliable ride or a traveler exploring new destinations,
             choose us for a superior bike rental experience.<br />
             <a className="btn btn-outline-success mt-3" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}> Book a ride now </a>
-            <Link className="btn btn-outline-success mt-3 ms-3" to='/contact'>Contact us</Link>
+            <Link className="btn btn-success mt-3 ms-3" to='/contact'>Contact us</Link>
 
           </div>
         </div>
       </div>
 
       <footer class="footer mt-auto py-3 bigContainer text-light text-end">
-        <div class="container text-center">
-          <span>© 2024 www.bookmyride.com || Sugam Neupane</span>
-        </div>
-      </footer>
+                <div class="container text-center">
+                    <span>© 2024 www.bookmyride.com || Sugam Neupane</span>
+                </div>
+            </footer>
 
     </>
   );

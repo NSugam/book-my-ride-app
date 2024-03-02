@@ -72,8 +72,8 @@ export default function UserBookings(props) {
                                             <table className="bigContainer bg-dark table  text-center table-hover table-responsive">
                                                 <thead >
                                                     <tr>
-                                                        <th scope="col" className='bigContainer text-light'>Pickup</th>
-                                                        <th scope="col" className='bigContainer text-light'>Drop details</th>
+                                                        <th scope="col" className='bigContainer text-light'>Pickup Date</th>
+                                                        <th scope="col" className='bigContainer text-light'>Drop Date</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -87,7 +87,7 @@ export default function UserBookings(props) {
                                     </div>
                                 </div>
                                 <div className=" d-flex card-footer justify-content-between">
-                                    <small className="text-light text-start">Picked up from: <strong> {data.city}</strong></small>
+                                    <small className="text-light text-start">Pick up Location: <strong> {data.city}</strong></small>
                                 </div>
                             </div>
                         </div>

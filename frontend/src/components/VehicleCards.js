@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { Context } from '../context/SharedState';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
 
@@ -64,7 +64,14 @@ export default function VehicleCards(props) {
                 <button type="button" className="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#ModifyDataModal">
                     Modify Details
                 </button>
+
                 <strong className='text-light mx-2'>Time Period: {totalDays} days {Hours} hours (Total: {totalHours} hrs) </strong>
+
+                <select className="rounded p-2" defaultValue={"cc"}>
+                    <option value="cc" disabled>Sort by: bike cc</option>
+                    <option value="vtype">Vehicle type</option>
+                    <option value="rate">Price Rate</option>
+                </select>
 
                 <div className="modal fade" id="ModifyDataModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-hidden="true"  >
                     <div className="modal-dialog modal-dialog-centered">
@@ -80,7 +87,6 @@ export default function VehicleCards(props) {
                                             <option value="Bangalore">Bangalore</option>
                                             <option value="Hydrabad">Hydrabad</option>
                                             <option value="Delhi">Delhi</option>
-                                            <option value="Chennai">Chennai</option>
                                         </select>
                                     </div>
                                     <div className="col-md-6">

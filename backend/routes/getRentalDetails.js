@@ -7,22 +7,47 @@ const vehicleDetailsModel = require("../Modals/Vehicledata")
 const RentalDetailsModel = require("../Modals/Rentaldata")
 
 router.get('/', fetchUser, async (req, res) => {
-    try {
-        const details = await RentalDetailsModel.find({ userId: req.user.id }).select({ bikeId: 1, _id: 0 });
 
-        // Assuming details is an array of bikeIds
-        const bikeIds = details.map(detail => detail.bikeId);
-
-        // Query to find all documents in vehicleDetailsModel where the bikeId is in the bikeIds array
-        const vehicleDetails = await vehicleDetailsModel.find({ _id: { $in: bikeIds } });
-
-        res.json(vehicleDetails)
-
-          
-
-    } catch {
-        res.send("Server Error")
-    }
+    RentalDetailsModel.aggregate([
+        {
+            $lookup: {
+                from: vehicleDetailsModel.collection.name,
+                localField: "bikeId",
+                foreignField: "_id",
+                as: "bikeDetails"
+            }
+        },
+        {
+            $unwind: "$bikeDetails"
+        },
+        {
+            $project: {
+                _id: 0,
+                userId: 1,
+                bikeId: 1,
+                startDate: 1,
+                endDate: 1,
+                bikeName: "$bikeDetails.bikeName",
+                modelName: "$bikeDetails.modelName",
+                color: "$bikeDetails.color",
+                vType: "$bikeDetails.vType",
+                city: "$bikeDetails.city",
+                img: "$bikeDetails.img",
+                rate: "$bikeDetails.rate",
+                limit: "$bikeDetails.limit",
+                cc: "$bikeDetails.cc",
+            }
+        }
+    ])
+        .exec()
+        .then(result => {
+            console.log(result);
+            res.send(result)
+        })
+        .catch(err => {
+            res.status(500).send("Internal Server Error")
+            console.error(err);
+        });
 
 })
 

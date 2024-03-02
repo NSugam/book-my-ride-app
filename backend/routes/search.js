@@ -8,7 +8,7 @@ router.post('/',fetchUser, async (req, res)=> {
     const {city, vtype} = req.body
 
     if (req.body.vtype === "Any" ) {
-        const allVehicle = await vehicleDetailsModel.find({city:city})
+        const allVehicle = await vehicleDetailsModel.find({city:city}).sort({ cc: 1 })
         if (allVehicle == "") {
             res.json("Empty")
             return

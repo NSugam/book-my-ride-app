@@ -35,21 +35,22 @@ export default function Booking(props) {
             endDate: sessionStorage.getItem('endDate'),
             endTime: sessionStorage.getItem('endTime')
         };
-        axios.put(states.hostname + "/api/handlebooking/checkout", data).then(res => {
-            navigate('/')
-            props.showAlert("Booking Confirmed!", "success")
+        axios.put(states.hostname + "/api/handlebooking/checkout", data)
+            .then(res => {
+                navigate('/')
+                props.showAlert("Booking Confirmed!", "success")
 
-        }).catch(err => {
-            if (err.response.status == '409') {
-                props.showAlert("You cannot book the same vehicle twice", "danger")
-                sessionStorage.clear()
-                navigate("/")
-            }
-            if (err.response.status == '404') {
-                props.showAlert("Data not found! Don't interfere with URL pattern", "danger")
-                navigate("/search")
-            }
-        })
+            }).catch(err => {
+                if (err.response.status == '409') {
+                    props.showAlert("You cannot book the same vehicle twice", "danger")
+                    sessionStorage.clear()
+                    navigate("/")
+                }
+                if (err.response.status == '404') {
+                    props.showAlert("Data not found! Don't interfere with URL pattern", "danger")
+                    navigate("/search")
+                }
+            })
     }
 
     const handleCoupon = () => {
@@ -102,6 +103,7 @@ export default function Booking(props) {
                         <div className="col-sm-4 mt-2 mb-4 appearfromRight" key={data._id}>
                             <div className="card h-100 bigContainer text-light">
                                 <a className="link-hover hover-zoom" href="#"><img src={data.img} className="card-img-top" alt="Loading..." height={230} /></a>
+                                <span className='text-danger'>Image shown above may or may not be the latest condition of the vehicle</span>
                                 <div className="card-body">
                                     <h5 className="card-title">{data.bikeName} {data.modelName}</h5>
                                     <div className="card-text text-end table-responsive-xl">

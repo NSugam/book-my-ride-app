@@ -3,7 +3,7 @@ const fs = require("fs")
 
 const RentalDetailsSchema = new mongoose.Schema({
     userId: String,
-    bikeId: String,
+    bikeId: Object,
     startDate: String,
     startTime: String,
     endDate: String,
