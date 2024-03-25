@@ -1,16 +1,18 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import setAuthToken from './setAuthToken'
+import { Context } from '../context/SharedState';
 
 export default function LoginSignup(props) {
+    const states = useContext(Context);
     const [email, setEmail] = useState('')
     const[password, setPassword] = useState('')
     const navigate = useNavigate()
 
     const handleLogin = (e)=> {
         e.preventDefault();
-        axios.post("http://localhost:9090/api/handleuser/login", {email, password})
+        axios.post(states.hostname+"/api/handleuser/login", {email, password})
         .then (res=> {
                 const token = res.data.authtoken
                 props.showAlert("Welcome! "+res.data.username+" you are logged in", "danger")

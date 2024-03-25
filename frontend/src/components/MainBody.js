@@ -35,7 +35,7 @@ export default function MainBody(props) {
     e.preventDefault();
 
     if (checkStartDateTime(sessionStorage.getItem('startDate'), sessionStorage.getItem('startTime'))) {
-      axios.post(states.hostname + "/api/search/", { city, vtype, startDate, startTime })
+      axios.post(states.hostname+"/api/search/", { city, vtype, startDate, startTime })
         .then(res => {
           if (res.data === "Empty") {
             props.showAlert("Sorry! Vehicle(s) are not available", "danger")
