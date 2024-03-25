@@ -3,13 +3,14 @@ const express = require("express")
 const mongoose = require("mongoose")
 const cors = require("cors")
 
+const PORT = process.env.PORT || 9090
+mongoose.connect(process.env.MONGODB_SERVER);
+
 // Middlewares
 const app = express()
 app.use(express.json())
 app.use(cors())
 
-const PORT = process.env.PORT || 9090
-mongoose.connect(process.env.MONGODB_SERVER);
 
 app.get('/', (req,res)=> {
     console.log("BookMyRide Server Status: Running...")
