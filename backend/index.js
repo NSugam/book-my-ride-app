@@ -13,7 +13,7 @@ app.use(cors())
 
 
 app.get('/', (req,res)=> {
-    console.log("BookMyRide Server Status: Running...")
+    res.send("BookMyRide Server Status: Running...")
 })
 
 app.listen(PORT, ()=> {
