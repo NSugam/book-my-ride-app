@@ -22,7 +22,6 @@ export default function MainBody(props) {
   const navigate = useNavigate();
 
   function checkStartDateTime(dateInput, timeInput) {
-    console.log(dateInput, timeInput)
     const [year, month, day] = dateInput.split("-");
     const [hours, minutes] = timeInput.split(":");
 

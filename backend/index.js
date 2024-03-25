@@ -2,12 +2,16 @@ const express = require("express")
 const mongoose = require("mongoose")
 const cors = require("cors")
 const PORT = 9090
-
 const app = express()
 app.use(express.json())
 app.use(cors())
 
-mongoose.connect("mongodb://localhost:27017/bookymyride");
+require('dotenv').config();
+mongoose.connect(process.env.MONGODB_SERVER);
+
+app.get('/', ()=> {
+    console.log("BookMyRide Server Status: Running...")
+})
 
 app.listen(PORT, ()=> {
     console.log("Server is Running on: http://localhost:9090")
