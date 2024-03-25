@@ -4,21 +4,21 @@ const mongoose = require("mongoose")
 const cors = require("cors")
 
 const PORT = process.env.PORT || 9090
-mongoose.connect(process.env.MONGODB_SERVER);
+const app = express()
 
 // Middlewares
-const app = express()
 app.use(express.json())
 app.use(cors())
 
+mongoose.connect(process.env.MONGODB_SERVER);
+
+app.listen(PORT, ()=> {
+    console.log("Server is Running")
+});
 
 app.get('/', (req,res)=> {
     res.send("BookMyRide Server Status: Running...")
-})
-
-app.listen(PORT, ()=> {
-    console.log("Server is Running on: http://localhost:9090")
-})
+});
 
 
 //for handling login and Signup
