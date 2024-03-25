@@ -1,5 +1,4 @@
 const mongoose = require("mongoose")
-const fs = require("fs")
 
 const vehicleDetailsSchema = new mongoose.Schema({
     bikeName: String,

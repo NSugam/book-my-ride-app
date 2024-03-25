@@ -1,5 +1,7 @@
 var jwt = require('jsonwebtoken') //for sending auth token to logged in user
-JWT_SECRET = "Welcometoreactjsworldwith@nonym0u$" //for sending auth token to logged in user
+
+require('dotenv').config();
+JWT_SECRET = process.env.JWT_SECRET
 
 const fetchUser = (req, res, next) => {
     // verifying the Authentication from header and proceeding further

@@ -2,7 +2,12 @@ const express = require("express")
 const {body} = require('express-validator')
 const bcrypt = require("bcryptjs") // for hashing passoword
 var jwt = require('jsonwebtoken') //for sending auth token to logged in user
-JWT_SECRET = "Welcometoreactjsworldwith@nonym0u$" //for sending auth token to logged in user
+
+
+require('dotenv').config();
+JWT_SECRET = process.env.JWT_SECRET //for sending auth token to logged in user
+
+
 var fetchUser = require("../middleware/fetchUser")
 const router = express.Router()
 
@@ -72,7 +77,5 @@ router.post('/getuser', fetchUser, async (req,res) => {
     }
 
 })
-
-
 
 module.exports = router;
