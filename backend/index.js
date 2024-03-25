@@ -11,7 +11,7 @@ app.use(cors())
 const PORT = process.env.PORT || 9090
 mongoose.connect(process.env.MONGODB_SERVER);
 
-app.get('/', ()=> {
+app.get('/', (req,res)=> {
     console.log("BookMyRide Server Status: Running...")
 })
 
