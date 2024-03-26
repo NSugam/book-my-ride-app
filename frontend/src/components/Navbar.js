@@ -1,8 +1,9 @@
 import React, { useContext, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import setAuthToken from './setAuthToken'
-import axios from 'axios'
 import { Context } from '../context/SharedState'
+import axios from 'axios'
+import Getuser from '../user/Getuser'
 
 export default function Navbar(props) {
   const states = useContext(Context)
@@ -17,15 +18,7 @@ export default function Navbar(props) {
   }
 
   useEffect(() => {
-    axios.post(states.hostname+'/api/handleuser/getuser')
-      .then(async res => {
-        const username = res.data
-        await states.setUser({ data: username })
-      }).catch(error => {
-        if (error.response === 403) {
-          states.setUser(null)
-        }
-      })
+    Getuser(states);
     },[])
 
   return (

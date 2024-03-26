@@ -61,11 +61,34 @@ router.post('/login', [
         else {
             res.status(401).send("Email or Password is Invalid!")
         }
-
     })
 })
 
-//ROUTE 3: Get loggedin User Details using auth-token
+//ROUTE 3: Change Loggedin User Details
+router.post('/edit', fetchUser, async (req, res) => {
+    try {
+        const userID = req.user.id;
+        const user = await userDataModel.findById(userID).select("-password");
+
+        if (user) {
+            const { username, email, phone } = req.body;
+            user.username = username || user.username;
+            user.email = email || user.email;
+            user.phone = phone || user.phone;
+
+            await user.save();
+            res.status(200).json({ message: "Success" });
+        } else {
+            res.status(404).json({ message: "User not found" });
+        }
+    } catch (err) {
+        console.log("Error updating user details:", err);
+        res.status(500).json({ message: "Error updating user details" });
+    }
+});
+
+
+//ROUTE 4: Get loggedin User Details using auth-token
 router.post('/getuser', fetchUser, async (req,res) => {
     try {
         const userID = req.user.id;
@@ -73,9 +96,7 @@ router.post('/getuser', fetchUser, async (req,res) => {
         res.send(user)
     } catch {
         console.log("Error getting user details")
-
     }
-
 })
 
 module.exports = router;
