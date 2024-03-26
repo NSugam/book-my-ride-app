@@ -9,7 +9,7 @@ const app = express()
 // Middlewares
 app.use(express.json())
 app.use(cors({
-    origin: true, // Allow requests from any origin
+    origin: ['https://bookmyride-frontend.vercel.app', 'http://localhost:3000'],
     credentials: true, // Enable credentials
 }));
 
