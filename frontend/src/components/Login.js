@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import setAuthToken from './setAuthToken'
 import { Context } from '../context/SharedState';
+import Loader from './Loader';
 
 export default function LoginSignup(props) {
     const states = useContext(Context);
@@ -11,6 +12,7 @@ export default function LoginSignup(props) {
     const navigate = useNavigate()
 
     const handleLogin = (e)=> {
+        states.setLoading(true)
         e.preventDefault();
         axios.post(states.hostname+"/api/handleuser/login", {email, password})
         .then (res=> {
@@ -18,16 +20,19 @@ export default function LoginSignup(props) {
                 props.showAlert("Welcome! "+res.data.username+" you are logged in", "danger")
                 localStorage.setItem("jwtToken", token)
                 setAuthToken(token)
+                states.setLoading(false)
                 navigate('/')
             }
 
         ).catch (error => {
+            states.setLoading(false)
             props.showAlert(error.response.data, "danger")
         })
     }
 
   return (
 <>
+{states.loading && <Loader/>}
 <div className="bigContainer text-light container col-md-3 p-4 mt-5">
     <form onSubmit={handleLogin}>
             <h3>Login</h3>

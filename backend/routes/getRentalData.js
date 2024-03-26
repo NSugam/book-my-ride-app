@@ -7,7 +7,12 @@ const RentalDataModel = require("../Modals/Rentaldata")
 
 router.get('/', fetchUser, async (req, res) => {
 
+    const userId = req.user.id;
+
     RentalDataModel.aggregate([
+        {
+            $match: { userId: userId }
+        },
         {
             $lookup: {
                 from: vehicleDetailsModel.collection.name,

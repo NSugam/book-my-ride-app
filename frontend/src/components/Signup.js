@@ -3,6 +3,7 @@ import { React, useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import { Context } from '../context/SharedState';
+import Loader from './Loader';
 
 export default function Signup(props) {
     const states = useContext(Context)
@@ -15,19 +16,24 @@ export default function Signup(props) {
     const navigate = useNavigate()
 
     const handleSubmit = (e)=> {
+        states.setLoading(true)
         e.preventDefault()
-        var res = axios.post(states.hostname+'/api/handleuser/signup', {username, phone, email, password})
-        .then(res=>{
+        axios.post(states.hostname+'/api/handleuser/signup', {username, phone, email, password})
+        .then(res => {
+            states.setLoading(false)
             props.showAlert(res.data, "dark")
             navigate('/login')
         })
         .catch(err=> {
+            states.setLoading(false)
             props.showAlert("Error! "+err.response.data, "danger")
         })
+        
     }
 
   return (
 <> 
+{states.loading && <Loader/>}
 <div className="bigContainer text-light container col-md-3 p-4 mt-5">
     <form onSubmit={handleSubmit}>
             <h3>Signup</h3>
