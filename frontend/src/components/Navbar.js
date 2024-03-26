@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import setAuthToken from './setAuthToken'
+import axios from 'axios'
+import { Context } from '../context/SharedState'
 
 export default function Navbar(props) {
+  const states = useContext(Context)
   const location = useLocation()
 
   const handlelogout = () => {
@@ -12,6 +15,18 @@ export default function Navbar(props) {
     setAuthToken(false)
     window.location.reload(false)
   }
+
+  useEffect(() => {
+    axios.post(states.hostname+'/api/handleuser/getuser')
+      .then(async res => {
+        const username = res.data
+        await states.setUser({ data: username })
+      }).catch(error => {
+        if (error.response === 403) {
+          states.setUser(null)
+        }
+      })
+    },[])
 
   return (
     <>
@@ -37,13 +52,15 @@ export default function Navbar(props) {
             {localStorage.getItem("jwtToken") ?
               <div className="btn-group">
                 <span className="material-symbols-outlined dropdown-toggle text-light fs-2" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-                  settings_account_box
+                  manage_accounts
                 </span>
 
                 <ul className="dropdown-menu dropdown-menu-lg-end dropdown-menu-dark">
-                  <li><Link className="dropdown-item" to="/registration">Register new vehicle</Link></li>
-                  <li><Link className="dropdown-item" to="/mybooking">My Bookings</Link></li>
-                  <li><a className="dropdown-item" href="#">Profile Settings</a></li>
+                  <li><a className="dropdown-item disabled" to="/registration">{states.user.data && states.user.data.username}</a></li>
+                  <li><hr className="dropdown-divider"/></li>
+                  <li><Link className={`dropdown-item ${location.pathname === '/user' ? "active" : ""}`} to='/user'>Profile Settings</Link></li>
+                  <li><Link className={`dropdown-item ${location.pathname === '/mybooking' ? "active" : ""}`} to="/mybooking">My Bookings</Link></li>
+                  <li><Link className={`dropdown-item ${location.pathname === '/registration' ? "active" : ""}`} to="/registration">Register new vehicle</Link></li>
                   <li><hr className="dropdown-divider" /></li>
                   <li><Link className="dropdown-item text-danger fw-bold" onClick={handlelogout}>Logout</Link></li>
                 </ul>

@@ -70,9 +70,9 @@ router.post('/getuser', fetchUser, async (req,res) => {
     try {
         const userID = req.user.id;
         const user = await userDataModel.findById(userID).select("-password")
-        res.send("Authentication Success")
+        res.send(user)
     } catch {
-        console.log("Error here")
+        console.log("Error getting user details")
 
     }
 

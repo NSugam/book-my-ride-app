@@ -9,6 +9,8 @@ const SharedState = (props) => {
 
     const [loading, setLoading] = useState(false);
 
+    const [user, setUser] = useState({});
+
     const [city, setCity] = useState();
     const [vtype, setVtype] = useState();
     const [startDate, setStartDate] = useState();
@@ -22,6 +24,7 @@ const SharedState = (props) => {
         <Context.Provider value={{
             hostname,
             loading, setLoading,
+            user, setUser,
             booking, setBooking,
             result, setResults, 
             city, setCity, 

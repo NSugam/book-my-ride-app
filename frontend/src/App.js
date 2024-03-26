@@ -7,16 +7,17 @@ import Signup from './components/Signup';
 import Alerts from './components/Alerts';
 import VehicleCards from './components/VehicleCards';
 import Registration from './components/Registration';
-import { SharedState } from './context/SharedState';
+import { Context, SharedState } from './context/SharedState';
 import setAuthToken from './components/setAuthToken';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Booking from './components/Booking';
 import UserBookings from './components/MyBookings';
 import Page404 from './components/Page404';
 import Contactus from './components/Contactus';
 import "./MainBody.css";
 import './App.css';
-
+import User from './components/User';
+import axios from 'axios';
 
 function App() {
 
@@ -27,8 +28,6 @@ function App() {
   }
 
   const [alert, setAlert] = useState()
-
-
   const showAlert = (message, type) => {
     setAlert({
       msg: message,
@@ -38,8 +37,7 @@ function App() {
       setAlert(null)
     }, 3000);
   }
-
-
+    
   return (
     <>
       <SharedState>
@@ -57,6 +55,7 @@ function App() {
               <Route exact path="/booking/:bikeId" element={<Booking showAlert={showAlert} />} />
               <Route exact path="/registration" element={<Registration showAlert={showAlert} />} />
               <Route exact path="/mybooking" element={<UserBookings showAlert={showAlert} />} />
+              <Route exact path="/user" element={<User showAlert={showAlert} />} />
               <Route path="*" element={<Page404 />} />
             </Routes>
           </div>
