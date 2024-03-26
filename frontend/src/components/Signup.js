@@ -1,9 +1,11 @@
 import axios from 'axios'
-import { React, useState } from 'react'
+import { React, useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
+import { Context } from '../context/SharedState';
 
 export default function Signup(props) {
+    const states = useContext(Context)
 
     const [username, setUsername] = useState('')
     const [phone, setPhone] = useState('')
@@ -14,7 +16,7 @@ export default function Signup(props) {
 
     const handleSubmit = (e)=> {
         e.preventDefault()
-        var res = axios.post('http://localhost:9090/api/handleuser/signup', {username, phone, email, password})
+        var res = axios.post(states.hostname+'/api/handleuser/signup', {username, phone, email, password})
         .then(res=>{
             props.showAlert(res.data, "dark")
             navigate('/login')
