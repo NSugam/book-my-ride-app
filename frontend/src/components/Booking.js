@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Context } from '../context/SharedState';
 import axios from 'axios';
+import Loader from './Loader';
 
 export default function Booking(props) {
     const states = useContext(Context);
@@ -70,7 +71,7 @@ export default function Booking(props) {
     if (!states.booking.data.map || !user.data.map) {
         return (
             <>
-                <p className='text-light'>Waiting for server...</p>
+                <Loader/>
             </>
         );
     }

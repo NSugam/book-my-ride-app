@@ -7,6 +7,8 @@ const SharedState = (props) => {
 
     const hostname = process.env.REACT_APP_HOSTNAME
 
+    const [loading, setLoading] = useState(false);
+
     const [city, setCity] = useState();
     const [vtype, setVtype] = useState();
     const [startDate, setStartDate] = useState();
@@ -19,6 +21,7 @@ const SharedState = (props) => {
     return (
         <Context.Provider value={{
             hostname,
+            loading, setLoading,
             booking, setBooking,
             result, setResults, 
             city, setCity, 

@@ -3,6 +3,7 @@ import { Context } from '../context/SharedState';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
+import Loader from './Loader';
 
 export default function VehicleCards(props) {
     const navigate = useNavigate();
@@ -57,7 +58,7 @@ export default function VehicleCards(props) {
     }
 
     if (!states.result.data.map) {
-        return <p className='text-light'>Loading Data...</p>;
+        return <Loader/>;
     }
 
     return (

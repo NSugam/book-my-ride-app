@@ -1,7 +1,8 @@
 import axios from "axios";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from '../context/SharedState';
+import Loader from "./Loader";
 export default function MainBody(props) {
 
   //  Here I am using some values from STATES and some from SESSION-STORAGE just to know how both of these things work in realworld.
@@ -31,36 +32,42 @@ export default function MainBody(props) {
     return givenDateTime > currentDateTime;
   }
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
+    states.setLoading(true);
     e.preventDefault();
 
     if (checkStartDateTime(sessionStorage.getItem('startDate'), sessionStorage.getItem('startTime'))) {
       axios.post(states.hostname+"/api/search/", { city, vtype, startDate, startTime })
         .then(res => {
           if (res.data === "Empty") {
+            states.setLoading(false);
             props.showAlert("Sorry! Vehicle(s) are not available", "danger")
             return
           }
+          states.setLoading(false);
           sessionStorage.setItem('city', states.city)
           sessionStorage.setItem('vtype', states.vtype)
           navigate('/search')
         })
         .catch(err => {
+          states.setLoading(false);
           navigate('/login')
           props.showAlert(err.response.data, "danger")
         })
     }
     else {
+      states.setLoading(false);
       props.showAlert("Date and Time is incorrect", "danger")
     }
   };
 
   return (
     <>
+    
       <div className="row m-auto">
+          {states.loading && <Loader/>}
         <div className="container col-sm-7">
-          <img
-            src="images/car.png" alt="Loading..." width="105%" height="100%" className="floatOnY" />
+          <img src="images/car.png" alt="Loading..." width="105%" height="100%" className="floatOnY" />
         </div>
 
         <div className="container col-sm-3 appearfromRight mb-3">

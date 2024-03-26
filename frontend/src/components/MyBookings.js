@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { Context } from '../context/SharedState';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Loader from './Loader';
 
 export default function UserBookings(props) {
 
@@ -34,7 +35,7 @@ export default function UserBookings(props) {
 
 
     if (!states.result.data.map) {
-        return <p className='text-light'>Loading Data...</p>;
+        return <Loader/>;
     }
 
     return (
