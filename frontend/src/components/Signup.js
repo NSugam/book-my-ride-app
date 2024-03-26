@@ -34,7 +34,7 @@ export default function Signup(props) {
   return (
 <> 
 {states.loading && <Loader/>}
-<div className="bigContainer text-light container col-md-3 p-4 mt-5">
+<div className="bigContainer text-light container col-md-3 p-4 mt-5 appearfromLeft">
     <form onSubmit={handleSubmit}>
             <h3>Signup</h3>
             <hr/>

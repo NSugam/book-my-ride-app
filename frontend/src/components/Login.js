@@ -20,7 +20,7 @@ export default function LoginSignup(props) {
                 props.showAlert("Welcome! " + res.data.username + " you are logged in", "danger")
                 localStorage.setItem("jwtToken", token)
                 setAuthToken(token)
-                
+
                 axios.post(states.hostname+'/api/handleuser/getuser') //for getting user details in user state
                     .then(async res => {
                         const username = res.data
@@ -43,7 +43,7 @@ export default function LoginSignup(props) {
     return (
         <>
             {states.loading && <Loader />}
-            <div className="bigContainer text-light container col-md-3 p-4 mt-5">
+            <div className="bigContainer text-light container col-md-3 p-4 mt-5 appearfromRight">
                 <form onSubmit={handleLogin}>
                     <h3>Login</h3>
                     <hr />
