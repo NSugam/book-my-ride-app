@@ -157,7 +157,6 @@ export default function VehicleCards(props) {
                                                 </tbody>
                                             </table>
                                         </div>
-                                        Available: <strong>2</strong><br />
                                         Price: <strong> Rs. {data.rate * totalHours}/-</strong>
                                     </div>
                                 </div>
