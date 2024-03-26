@@ -19,16 +19,18 @@ export default function User(props) {
 
     const handleChanges = (e) => {
         e.preventDefault();
+        states.setLoading(true)
         axios.post(states.hostname + '/api/handleuser/edit', userInput)
             .then(async res => {
-                Getuser(states);
+                await Getuser(states);
                 props.showAlert('User details updated successfully', 'success')
+                states.setLoading(false)
             })
             .catch(error => {
+                states.setLoading(false)
                 props.showAlert(error.data.message, 'danger')
             })
-        setEdit(false)
-
+            setEdit(false)
     }
 
 
@@ -40,7 +42,8 @@ export default function User(props) {
 
     return (
         <>
-            <div className='container Container bigContainer text-light p-3 appearfromTop col-sm-5 rounded'>
+        {states.loading && <Loader/>}
+            <div className='container Container bigContainer text-light p-3 appearfromTop col-sm-5 rounded mt-3'>
                 <section>
                     <div className='container row m-auto'>
                         <div className='col-sm-6 text-center border-end'>

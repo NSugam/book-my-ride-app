@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export default function Getuser(states) {
+export default async function Getuser(states) {
 
-    axios.post(states.hostname + '/api/handleuser/getuser')
+    await axios.post(states.hostname + '/api/handleuser/getuser')
         .then(async res => {
             const username = res.data;
             await states.setUser({ data: username });
