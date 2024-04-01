@@ -13,7 +13,7 @@ const router = express.Router()
 
 const userDataModel = require('../Modals/Userdata')
 
-// ROUTE 1: Create New User
+// ROUTE 1: Creating New User
 router.post('/signup',  async (req,res)=> {
     const {username, phone, email, password} = req.body;
     const checkEmail = await userDataModel.find({email: email})
