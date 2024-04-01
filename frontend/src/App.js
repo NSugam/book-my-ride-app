@@ -17,7 +17,6 @@ import Contactus from './components/Contactus';
 import "./MainBody.css";
 import './App.css';
 import User from './components/User';
-import axios from 'axios';
 
 function App() {
 
